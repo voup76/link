@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>该网站正在升级中</title>
+<script>
+(function(){
+  try{
+    var s=localStorage.getItem('link-theme');
+    document.documentElement.dataset.theme=s||(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+  }catch(e){document.documentElement.dataset.theme='dark';}
+})();
+</script>
+<style>
+:root{
+  --bg:#0a0c10;--card:rgba(255,255,255,.06);--border:rgba(255,255,255,.09);
+  --text:#f2f2f7;--dim:#9b9ba3;--accent:#5b9dff;
+  --glow1:rgba(91,157,255,.16);--glow2:rgba(168,85,247,.10);
+  --icon-bg:rgba(91,157,255,.14);--shadow:0 20px 60px rgba(0,0,0,.45);
+}
+:root[data-theme="light"]{
+  --bg:#eef1f6;--card:rgba(255,255,255,.75);--border:rgba(18,24,40,.08);
+  --text:#14161a;--dim:#6b7280;--accent:#2f6fed;
+  --glow1:rgba(91,157,255,.22);--glow2:rgba(168,85,247,.12);
+  --icon-bg:rgba(47,111,237,.10);--shadow:0 20px 50px rgba(31,45,80,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:32px 20px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei UI",sans-serif;
+  background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;
+  transition:background-color .35s ease,color .35s ease;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 25% 15%,var(--glow1),transparent 45%),
+             radial-gradient(circle at 78% 85%,var(--glow2),transparent 42%);
+  transition:background .35s ease;
+}
+.toggle{
+  position:fixed;top:20px;right:20px;width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--border);background:var(--card);color:var(--text);
+  display:grid;place-items:center;cursor:pointer;z-index:10;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 4px 14px rgba(0,0,0,.12);transition:.2s;
+}
+.toggle:hover{transform:scale(1.06);}
+.toggle svg{width:19px;height:19px;}
+[data-theme="dark"] .moon{display:none;}
+[data-theme="light"] .sun{display:none;}
+
+.card{
+  position:relative;z-index:1;width:100%;max-width:400px;text-align:center;
+  padding:44px 30px 34px;border-radius:22px;
+  background:var(--card);border:1px solid var(--border);
+  backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);
+  box-shadow:var(--shadow);transition:background .35s,border-color .35s,box-shadow .35s;
+}
+.icon-wrap{
+  position:relative;width:72px;height:72px;margin:0 auto 22px;
+  display:grid;place-items:center;border-radius:50%;
+  background:var(--icon-bg);color:var(--accent);font-size:30px;
+}
+.icon-wrap::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  border:2px solid var(--accent);opacity:.5;
+  animation:pulse 2.4s ease-out infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.5;}
+  70%{transform:scale(1.55);opacity:0;}
+  100%{transform:scale(1.55);opacity:0;}
+}
+h1{font-size:20px;font-weight:700;letter-spacing:.3px;margin-bottom:10px;}
+p{font-size:13.5px;line-height:1.75;color:var(--dim);}
+.tip{
+  margin-top:18px;padding:11px 14px;border-radius:12px;
+  background:var(--icon-bg);border:1px solid var(--border);
+  font-size:12.5px;color:var(--text);line-height:1.6;
+}
+.tip b{color:var(--accent);font-weight:600;}
+.actions{display:flex;gap:10px;margin-top:24px;}
+.btn{
+  flex:1;padding:11px 10px;border-radius:12px;border:1px solid var(--border);
+  background:rgba(128,128,128,.08);color:var(--text);font-size:13px;font-family:inherit;
+  font-weight:500;cursor:pointer;text-decoration:none;text-align:center;
+  transition:.18s;
+}
+.btn:hover{background:rgba(128,128,128,.16);transform:translateY(-1px);}
+.btn.primary{background:var(--accent);border-color:transparent;color:#fff;font-weight:600;}
+.btn.primary:hover{filter:brightness(1.08);}
+@media(max-width:420px){
+  .card{padding:36px 22px 28px;}
+  .icon-wrap{width:64px;height:64px;font-size:26px;}
+  h1{font-size:18px;}
+  .toggle{top:14px;right:14px;width:38px;height:38px;}
+}
+</style>
+</head>
+<body>
+<button class="toggle" id="tg" aria-label="切换主题">
+  <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/>
+  </svg>
+  <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+</button>
+
+<main class="card">
+  <div class="icon-wrap">🛠️</div>
+  <h1>该网站正在升级中，请稍等</h1>
+  <p>我们正在做一些优化，很快就会回来。</p>
+  <div class="tip">如果访问不了，请<b>用流量</b>试一下。</div>
+  <div class="actions">
+    <button class="btn primary" onclick="location.reload()">刷新重试</button>
+    <a class="btn" href="https://voup76.github.io/link/">返回首页</a>
+  </div>
+</main>
+
+<script>
+(function(){
+  var r=document.documentElement,b=document.getElementById('tg');
+  b.addEventListener('click',function(){
+    var n=r.dataset.theme==='dark'?'light':'dark';
+    r.dataset.theme=n;try{localStorage.setItem('link-theme',n);}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
